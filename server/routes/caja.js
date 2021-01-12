@@ -36,7 +36,7 @@ app.get('/caja', function(req, res) {
         }
     }
 
-    console.log(solicitud);
+    //console.log(solicitud);
     Caja.find(solicitud, 'n_caja fecha hora')
         .skip(desde)
         .limit(limite)
