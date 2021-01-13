@@ -1,100 +1,92 @@
-# Título del Proyecto
+# API REST Información de Caja
 
-_Acá va un párrafo que describa lo que es el proyecto_
+_API REST que consiste en lectura del número de caja que se almacena en una base de datos de MongoDB Atlas juntamente con la fecha y hora actual en el momento que se realiza la petición. Presenta un reporte de tipo JSON, el mismo que puede ser filtrado por fecha, hora o por las dos. Además, permite la eliminación de un registro de caja según el id que le pertenece. Este ejemplo es tomado de un caso de estudio real de Infinity Plus_
 
-## Comenzando 🚀
+## Aplicación 🚀
 
-_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
+_Esta aplicación REST se encuentra dezplegada en Heroku [API-REST-INFORMACION-CAJA](https://api-rest-infocaja.herokuapp.com/) Es posible usar Postman para probar la funcionalidad de la aplicación_
 
-Mira **Deployment** para conocer como desplegar el proyecto.
+### Dependencias📋
+
+* body-parser - Middleware de análisis del cuerpo
+* express - Framework web
+* mongoose - Base de Datos
 
 
-### Pre-requisitos 📋
+## Ejemplos de Ejecución ⚙️
 
-_Que cosas necesitas para instalar el software y como instalarlas_
+_Los ejemplos presentados a continuación fueron realizados en **Postman**_
 
-```
-Da un ejemplo
-```
+### Método POST
 
-### Instalación 🔧
-
-_Una serie de ejemplos paso a paso que te dice lo que debes ejecutar para tener un entorno de desarrollo ejecutandose_
-
-_Dí cómo será ese paso_
+_Utilizado para el almacenamiento de registro de caja en la base de datos_
 
 ```
-Da un ejemplo
+https://api-rest-infocaja.herokuapp.com/caja
+```
+![ScreenshotPOST](assets/meth_post.PNG)
+
+### Método GET
+
+_Utilizado para obtener un reporte ya sea filtrado por fecha, por hora o por ambos_
+
+**Por fecha**
+```
+https://api-rest-infocaja.herokuapp.com/caja?fecha=12/01/2021
 ```
 
-_Y repite_
+![ScreenshotGETFecha](assets/meth_getfecha.PNG)
 
+**Por hora**
 ```
-hasta finalizar
-```
-
-_Finaliza con un ejemplo de cómo obtener datos del sistema o como usarlos para una pequeña demo_
-
-## Ejecutando las pruebas ⚙️
-
-_Explica como ejecutar las pruebas automatizadas para este sistema_
-
-### Analice las pruebas end-to-end 🔩
-
-_Explica que verifican estas pruebas y por qué_
-
-```
-Da un ejemplo
+https://api-rest-infocaja.herokuapp.com/caja?hora=18:29
 ```
 
-### Y las pruebas de estilo de codificación ⌨️
+![ScreenshotGETHora](assets/meth_gethora.PNG)
 
-_Explica que verifican estas pruebas y por qué_
+
+**Por fecha y hora**
+```
+https://api-rest-infocaja.herokuapp.com/caja?fecha=12/01/2021&hora=18:29
+```
+
+![ScreenshotGETHora](assets/meth_getfechahora.PNG)
+
+
+**Todos**
+```
+https://api-rest-infocaja.herokuapp.com/caja
+```
+
+![ScreenshotGet](meth_get.PNG)
+
+### Método DELETE
+
+_Utilizado para eliminar un registro según el id_
 
 ```
-Da un ejemplo
+https://api-rest-infocaja.herokuapp.com/caja/5ffdda4d46de
 ```
+![ScreenshotDelete](meth_delete.PNG)
+
+
 
 ## Despliegue 📦
 
-_Agrega notas adicionales sobre como hacer deploy_
+El deploy de la aplicación se lo realizó en Heroku.
+Tomando como referencia [Inicio Heroku](https://devcenter.heroku.com/articles/heroku-cli#getting-started) para iniciar sesión en la cuenta de Heroku creada previamente y para el dezpliegue de la aplicación se lo realizó con GIT como se describe en la documentación: [Deploy Git](https://devcenter.heroku.com/articles/heroku-cli#getting-started)
+
+### **Zona Horaria**
+La aplicación hace uso de Date() proveniente de JavaScript por lo que es necesario modificar la zona horaria de Heroku con el fin de obtener una fecha y hora correcta para lo cual es posible revisar la documentación: [Time Zone Heroku](https://dev.to/paulasantamaria/change-the-timezone-on-a-heroku-app-2b4) 
+
 
 ## Construido con 🛠️
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - El framework web usado
-* [Maven](https://maven.apache.org/) - Manejador de dependencias
-* [ROME](https://rometools.github.io/rome/) - Usado para generar RSS
-
-## Contribuyendo 🖇️
-
-Por favor lee el [CONTRIBUTING.md](https://gist.github.com/villanuevand/xxxxxx) para detalles de nuestro código de conducta, y el proceso para enviarnos pull requests.
-
-## Wiki 📖
-
-Puedes encontrar mucho más de cómo utilizar este proyecto en nuestra [Wiki](https://github.com/tu/proyecto/wiki)
-
-## Versionado 📌
-
-Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones disponibles, mira los [tags en este repositorio](https://github.com/tu/proyecto/tags).
+* [Visual Studio Code](https://code.visualstudio.com/) - Editor de código
+* [Postman](https://www.postman.com/) - Usado y recomendado para probar la API
+* [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) - Usado para la base de Datos en la nube
 
 ## Autores ✒️
 
-_Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
+* **Andrea Lizeth González Lasso** 
 
-* **Andrés Villanueva** - *Trabajo Inicial* - [villanuevand](https://github.com/villanuevand)
-* **Fulanito Detal** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
-
-También puedes mirar la lista de todos los [contribuyentes](https://github.com/your/project/contributors) quíenes han participado en este proyecto. 
-
-## Licencia 📄
-
-Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
-
-## Expresiones de Gratitud 🎁
-
-* Comenta a otros sobre este proyecto 📢
-* Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
-* Da las gracias públicamente 🤓.
-* etc.
