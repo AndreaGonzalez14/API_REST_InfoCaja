@@ -3,41 +3,19 @@ const app = express();
 const Caja = require('../models/caja');
 const underscore = require('underscore');
 
-app.get('/caja', function(req, res) {
+const { verificarToken, verificaAdminRole } = require('../middlewares/autenticacion');
+
+//Consultar por rango de fechas
+app.get('/cajaFecha', [verificarToken, verificaAdminRole], function(req, res) {
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
     let limite = req.query.limite || 10;
     limite = Number(limite);
 
-    let fecha_solicitada = req.query.fecha || null;
-    let hora_solicitada = req.query.hora || null;
-    let solicitud = "";
-    if (fecha_solicitada === null && hora_solicitada === null) {
-        solicitud = {
-
-        }
-    }
-    if (fecha_solicitada != null && hora_solicitada != null) {
-        solicitud = {
-            fecha: fecha_solicitada,
-            hora: hora_solicitada
-        }
-    }
-    if (fecha_solicitada != null && hora_solicitada === null) {
-        solicitud = {
-            fecha: fecha_solicitada
-        }
-    }
-
-    if (hora_solicitada != null && fecha_solicitada === null) {
-        solicitud = {
-            hora: hora_solicitada
-        }
-    }
-
-    //console.log(solicitud);
-    Caja.find(solicitud, 'n_caja fecha hora')
+    let fecha_solicitada_desde = req.query.fecha_desde;
+    let fecha_solicitada_hasta = req.query.fecha_hasta;
+    Caja.find({ fecha: { $gte: fecha_solicitada_desde, $lte: fecha_solicitada_hasta } }, 'n_caja fecha hora')
         .skip(desde)
         .limit(limite)
         .exec((err, cajas) => {
@@ -48,7 +26,7 @@ app.get('/caja', function(req, res) {
                 })
             }
 
-            Caja.count(solicitud, (err, conteo) => {
+            Caja.countDocuments({ fecha: { $gte: fecha_solicitada_desde, $lte: fecha_solicitada_hasta } }, (err, conteo) => {
                 res.json({
                     ok: true,
                     registros: conteo,
@@ -58,7 +36,67 @@ app.get('/caja', function(req, res) {
         })
 })
 
-app.post('/caja', function(req, res) {
+//Consultar por caja
+app.get('/numeroCaja', [verificarToken, verificaAdminRole], function(req, res) {
+    let desde = req.query.desde || 0;
+    desde = Number(desde);
+
+    let limite = req.query.limite || 10;
+    limite = Number(limite);
+    let caja = req.query.n_caja;
+    //console.log(solicitud);
+    Caja.find({ n_caja: caja }, 'n_caja fecha hora')
+        .skip(desde)
+        .limit(limite)
+        .exec((err, cajas) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            Caja.countDocuments({ n_caja: caja }, (err, conteo) => {
+                res.json({
+                    ok: true,
+                    registros: conteo,
+                    cajas
+                })
+            })
+        })
+})
+
+//Consultar todos los resgistros
+app.get('/cajas', [verificarToken, verificaAdminRole], function(req, res) {
+    let desde = req.query.desde || 0;
+    desde = Number(desde);
+
+    let limite = req.query.limite || 10;
+    limite = Number(limite);
+    Caja.find({}, 'n_caja fecha hora')
+        .skip(desde)
+        .limit(limite)
+        .exec((err, cajas) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            Caja.countDocuments({}, (err, conteo) => {
+                res.json({
+                    ok: true,
+                    registros: conteo,
+                    cajas
+                })
+            })
+        })
+})
+
+
+//Guardar informacion
+app.post('/caja', [verificarToken, verificaAdminRole], function(req, res) {
     let fecha = new Date()
     let body = req.body;
     let caja = new Caja({
@@ -84,7 +122,7 @@ app.post('/caja', function(req, res) {
 
 
 
-app.delete('/caja/:id', function(req, res) {
+app.delete('/caja/:id', [verificarToken, verificaAdminRole], function(req, res) {
     let id = req.params.id;
 
     Caja.findByIdAndDelete(id, (err, regCajaEliminado) => {
