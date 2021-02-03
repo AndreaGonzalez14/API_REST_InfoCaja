@@ -97,11 +97,16 @@ app.get('/cajas', [verificarToken, verificaAdminRole], function(req, res) {
 
 //Guardar informacion
 app.post('/caja', [verificarToken, verificaAdminRole], function(req, res) {
+    /////////////////////Creacion de la fecha actual///////////
     let fecha = new Date()
+    var Month = ((fecha.getMonth() + 1) >= 10) ? (fecha.getMonth() + 1) : '0' + (fecha.getMonth() + 1);
+    var Day = ((fecha.getDate()) >= 10) ? (fecha.getDate()) : '0' + (fecha.getDate());
+    var hoy = Day + "/" + Month + "/" + fecha.getFullYear()
+        //////////////////////////////////////////////////////////////
     let body = req.body;
     let caja = new Caja({
         n_caja: body.numero_caja,
-        fecha: fecha.getDate() + "/" + fecha.getMonth() + 1 + "/" + fecha.getFullYear(),
+        fecha: hoy,
         hora: fecha.getHours() + ":" + fecha.getMinutes()
     })
     caja.save((err, cajaDB) => {

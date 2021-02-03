@@ -23,11 +23,15 @@ _Los ejemplos presentados a continuación fueron realizados en **Postman**_
 
 ### Método POST - Login
 
-_Un usuario registrado previamente puede iniciar sesión proporcionando el email, contraseña y el role de usuario. Es necesario iniciar sesión como Administrador para poder realizar todos las funcionalidades presentadas a continuación, haciendo uso del token que se genera al loguearse_
+_Un usuario registrado previamente puede iniciar sesión proporcionando el email, contraseña y el rol de usuario. Es necesario iniciar sesión como Administrador para poder realizar todos las funcionalidades presentadas a continuación, haciendo uso del token que se genera al loguearse_
+
+![ScreenshotLOGIN](assets/login.png)
 
 ### Token
 
 _El token generado debe ser colocado en cada petición como se muestra en la imagen_
+
+![ScreenshotTOKEN](assets/token.PNG)
 
 ### Método POST
 
@@ -40,21 +44,21 @@ https://api-rest-infocaja.herokuapp.com/caja
 
 ### Método GET
 
-_Utilizado para obtener un reporte ya sea filtrado por rango de fechas o por número de caja_
+_Utilizado para obtener un reporte ya sea filtrado por rango de fechas, por número de caja o todos los registros_
 
 **Por rango de fechas**
 ```
 https://api-rest-infocaja.herokuapp.com/cajaFecha?fecha_desde=12/01/2021&fecha_hasta=19/01/2021
 ```
 
-![ScreenshotGETFecha](assets/meth_getfecha.PNG)
+![ScreenshotGETFecha](assets/meth_getRangofecha.PNG)
 
 **Por número de caja**
 ```
-https://api-rest-infocaja.herokuapp.com/numeroCaja?n_caja=10
+https://api-rest-infocaja.herokuapp.com/numeroCaja?n_caja=11
 ```
 
-![ScreenshotGETHora](assets/meth_getfechahora.PNG)
+![ScreenshotGETNumCaja](assets/meth_get_numCaja.PNG)
 
 
 **Todos**
@@ -62,7 +66,7 @@ https://api-rest-infocaja.herokuapp.com/numeroCaja?n_caja=10
 https://api-rest-infocaja.herokuapp.com/cajas
 ```
 
-![ScreenshotGet](assets/meth_get.PNG)
+![ScreenshotGetCajas](assets/meth_getCajas.PNG)
 
 ### Método DELETE
 
